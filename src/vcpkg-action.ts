@@ -6,7 +6,9 @@ import * as core from '@actions/core'
 import * as path from 'path'
 import * as fs from 'fs'
 import * as cache from '@actions/cache'
-import { BaseLib, vcpkgDirectory, VcpkgRunner, vcpkgCommitId, vcpkgArguments } from '@lukka/run-cmake-vcpkg-action-libs'
+import { BaseLib } from '@lukka/base-lib'
+import { ActionLib } from '@lukka/action-lib'
+import { vcpkgDirectory, VcpkgRunner, vcpkgCommitId, vcpkgArguments } from '@lukka/run-vcpkg-lib'
 
 export const VCPKGCACHEKEY = 'cacheKey';
 export const VCPKGCACHEHIT = 'cacheHit';

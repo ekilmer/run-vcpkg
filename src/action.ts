@@ -2,16 +2,16 @@
 // Released under the term specified in file LICENSE.txt
 // SPDX short identifier: MIT
 
-import * as libaction from '@lukka/run-cmake-vcpkg-action-libs';
-import * as core from '@actions/core'
+import * as actionlib from '@lukka/action-lib'
+import * as runvcpkglib from '@lukka/run-vcpkg-lib';
+import * as core from '@actions/core';
 import * as vcpkgAction from './vcpkg-action';
 
 export const VCPKGDIRECTORIESKEY = 'vcpkgDirectoryKey';
 
 async function main(): Promise<void> {
   try {
-    const actionLib = new libaction.ActionLib();
-    libaction.setBaseLib(actionLib);
+    const actionLib = new actionlib.ActionLib();
     const action = new vcpkgAction.VcpkgAction(actionLib);
     await action.run();
     core.info('run-vcpkg action execution succeeded');
