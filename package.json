@@ -51,6 +51,7 @@
     "@lukka/base-lib": "0.12.1-alpha.3",
     "@lukka/base-util-lib": "0.12.1-alpha.3",
     "@lukka/action-lib": "0.12.1-alpha.3",
+    "@lukka/run-vcpkg-lib": "0.12.1-alpha.3",
     "strip-json-comments": "^3.0.1"
   }
 }
