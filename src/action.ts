@@ -17,8 +17,11 @@ async function main(): Promise<void> {
     core.info('run-vcpkg action execution succeeded');
     process.exitCode = 0;
   } catch (err) {
+    const error: Error = err as Error;
+    if (error?.stack) {
+      core.info(error.stack);
+    }
     const errorAsString = (err ?? "undefined error").toString();
-    core.debug('Error: ' + errorAsString);
     core.setFailed(`run-vcpkg action execution failed: ${errorAsString}`);
     process.exitCode = -1000;
   }

@@ -4227,8 +4227,11 @@ function main() {
             process.exitCode = 0;
         }
         catch (err) {
+            const error = err;
+            if (error === null || error === void 0 ? void 0 : error.stack) {
+                core.info(error.stack);
+            }
             const errorAsString = (err !== null && err !== void 0 ? err : "undefined error").toString();
-            core.debug('Error: ' + errorAsString);
             core.setFailed(`run-vcpkg action execution failed: ${errorAsString}`);
             process.exitCode = -1000;
         }
