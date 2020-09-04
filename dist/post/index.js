@@ -3324,7 +3324,7 @@ class VcpkgRunner {
             // Get the triplet specified in the task.
             let vcpkgTripletUsed = this.vcpkgTriplet;
             // Extract triplet from arguments for vcpkg.
-            const extractedTriplet = baseutillib.BaseLibUtils.extractTriplet(installCmd, this.baseUtils.readFile);
+            const extractedTriplet = baseutillib.BaseLibUtils.extractTriplet(installCmd, (p) => this.baseUtils.readFile(p));
             // Append triplet, only if provided by the user in the task arguments
             if (extractedTriplet !== null) {
                 if (vcpkgTripletUsed) {
