@@ -1260,7 +1260,10 @@ class VcpkgAction {
                         core.saveState(exports.VCPKGCACHEHIT, cacheHitId);
                     }
                     else {
-                        core.info(`Cache miss.`);
+                        core.info(`Cache not found for input keys: ${[
+                            key,
+                            ...restoreKeys
+                        ].join(", ")}`);
                     }
                 }
             }
