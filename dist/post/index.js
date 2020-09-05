@@ -1131,6 +1131,8 @@ exports.VCPKGCACHEKEY = 'cacheKey';
 exports.VCPKGCACHEHIT = 'cacheHit';
 // Input name for run-vcpkg only.
 exports.doNotCache = 'doNotCache';
+exports.cacheRestoreKeys = 'cacheRestoreKeys';
+exports.cacheKey = 'cacheKey';
 function ensureDirExists(path) {
     try {
         fs.mkdirSync(path, { recursive: true });
@@ -1186,14 +1188,22 @@ class VcpkgAction {
                 }
                 else {
                     // Get an unique output directory name from the URL.
-                    const key = this.computeKey();
+                    const key = core.getInput(exports.cacheKey) || this.computeKey();
                     const pathsToCache = getCachedPaths();
                     core.info(`Cache's key = '${key}'.`);
                     core.saveState(exports.VCPKGCACHEKEY, key);
                     core.info(`Running restore-cache`);
+                    const restoreKeys = core.getInput(exports.cacheRestoreKeys)
+                        .split("\n")
+                        .map(s => s.trim())
+                        .filter(x => x !== "");
+                    if (restoreKeys) {
+                        core.info(`Restoring with restore-keys:`);
+                        core.info(restoreKeys.toString());
+                    }
                     let cacheHitId;
                     try {
-                        cacheHitId = yield cache.restoreCache(pathsToCache, key);
+                        cacheHitId = yield cache.restoreCache(pathsToCache, key, restoreKeys);
                     }
                     catch (err) {
                         core.warning(`restoreCache() failed: '${(_a = err) === null || _a === void 0 ? void 0 : _a.toString()}'.`);
