@@ -81,10 +81,7 @@ export class VcpkgAction {
         core.saveState(VCPKGCACHEKEY, key);
         core.info(`Running restore-cache`);
 
-        const restoreKeys = core.getInput(cacheRestoreKeys)
-          .split("\n")
-          .map(s => s.trim())
-          .filter(x => x !== "");
+        const restoreKeys: string[] = this.tl.getDelimitedInput(cacheRestoreKeys, "\n", false);
         if(restoreKeys) {
           core.info(`Restoring with restore-keys:`);
           core.info(restoreKeys.toString());
