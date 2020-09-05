@@ -1131,6 +1131,7 @@ exports.VCPKGCACHEKEY = 'cacheKey';
 exports.VCPKGCACHEHIT = 'cacheHit';
 // Input name for run-vcpkg only.
 exports.doNotCache = 'doNotCache';
+exports.alwaysCache = 'alwaysCache';
 function ensureDirExists(path) {
     try {
         fs.mkdirSync(path, { recursive: true });

@@ -1131,6 +1131,7 @@ exports.VCPKGCACHEKEY = 'cacheKey';
 exports.VCPKGCACHEHIT = 'cacheHit';
 // Input name for run-vcpkg only.
 exports.doNotCache = 'doNotCache';
+exports.alwaysCache = 'alwaysCache';
 function ensureDirExists(path) {
     try {
         fs.mkdirSync(path, { recursive: true });
@@ -5873,7 +5874,7 @@ function main() {
                         core.warning(`Error retrieving cache's key.`);
                         return;
                     }
-                    if (isExactKeyMatch(cacheKey, cacheHit)) {
+                    if (isExactKeyMatch(cacheKey, cacheHit) && core.getInput(action.alwaysCache).toLowerCase() == "false") {
                         core.info(`Cache hit occurred on the cache key '${cacheKey}', saving cache is skipped.`);
                         return;
                     }

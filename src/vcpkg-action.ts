@@ -15,6 +15,7 @@ export const VCPKGCACHEKEY = 'cacheKey';
 export const VCPKGCACHEHIT = 'cacheHit';
 // Input name for run-vcpkg only.
 export const doNotCache = 'doNotCache';
+export const alwaysCache = 'alwaysCache';
 
 function ensureDirExists(path: string): void {
   try {

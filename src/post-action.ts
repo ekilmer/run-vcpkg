@@ -32,7 +32,7 @@ async function main(): Promise<void> {
           return;
         }
 
-        if (isExactKeyMatch(cacheKey, cacheHit)) {
+        if (isExactKeyMatch(cacheKey, cacheHit) && core.getInput(action.alwaysCache).toLowerCase() == "false") {
           core.info(`Cache hit occurred on the cache key '${cacheKey}', saving cache is skipped.`);
           return;
         }

@@ -52,6 +52,10 @@ inputs:
     default: false
     required: false
     description: "Disable the automatic caching mechanism by setting it to true. Default is false."
+  alwaysCache: 
+    default: false
+    required: false
+    description: "Always run the automatic caching mechanism and update the cache (even on cache-hit) by setting it to true. Default is false."
 
 runs:
   using: 'node12'
