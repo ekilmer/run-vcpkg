@@ -15,6 +15,8 @@ export const VCPKGCACHEKEY = 'cacheKey';
 export const VCPKGCACHEHIT = 'cacheHit';
 // Input name for run-vcpkg only.
 export const doNotCache = 'doNotCache';
+export const cacheRestoreKeys = 'cacheRestoreKeys';
+export const cacheKey = 'cacheKey';
 
 function ensureDirExists(path: string): void {
   try {
@@ -72,16 +74,22 @@ export class VcpkgAction {
         core.info(`Caching is disabled (${doNotCache}=true)`);
       } else {
         // Get an unique output directory name from the URL.
-        const key: string = this.computeKey();
+        const key: string = core.getInput(cacheKey) || this.computeKey();
         const pathsToCache: string[] = getCachedPaths();
 
         core.info(`Cache's key = '${key}'.`);
         core.saveState(VCPKGCACHEKEY, key);
         core.info(`Running restore-cache`);
 
+        const restoreKeys: string[] = this.tl.getDelimitedInput(cacheRestoreKeys, "\n", false);
+        if(restoreKeys) {
+          core.info(`Restoring with restore-keys:`);
+          core.info(restoreKeys.toString());
+        }
+
         let cacheHitId: string | undefined;
         try {
-          cacheHitId = await cache.restoreCache(pathsToCache, key);
+          cacheHitId = await cache.restoreCache(pathsToCache, key, restoreKeys);
         }
         catch (err) {
           core.warning(`restoreCache() failed: '${err?.toString()}'.`)
@@ -91,7 +99,12 @@ export class VcpkgAction {
           core.info(`Cache hit, id=${cacheHitId}.`);
           core.saveState(VCPKGCACHEHIT, cacheHitId);
         } else {
-          core.info(`Cache miss.`);
+          core.info(
+            `Cache not found for input keys: ${[
+              key,
+                ...restoreKeys
+            ].join(", ")}`
+        );
         }
       }
     } finally {

@@ -52,6 +52,14 @@ inputs:
     default: false
     required: false
     description: "Disable the automatic caching mechanism by setting it to true. Default is false."
+  cacheKey:
+    default: ""
+    required: false
+    description: "Custom cache key to use instead of default, which is calculated based on internal algorithm."
+  cacheRestoreKeys:
+    default: ""
+    required: false
+    description: "Restore prefix-matched caches. Should probably not be set unless 'cacheKey' is also set. See @actions/cache 'restore-key' for more details."
 
 runs:
   using: 'node12'
